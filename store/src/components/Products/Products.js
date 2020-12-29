@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import Product from './Product/Product'
 
 //style
-import useStyles from './styles.jsx'
+import useStyles from './styles.js'
 
 const Products = ({products, onAddToCart}) => {
     const classes = useStyles()
