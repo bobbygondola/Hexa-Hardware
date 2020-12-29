@@ -17,7 +17,7 @@ const App = () => {
 
     const handleAddToCart = async (productId, quantity) => {
         const item = await commerce.cart.add(productId, quantity)
-        setCart(item.cart)
+        setCart(item.cart) //cart after the item has been added
     }
 
     useEffect(() => {
@@ -25,7 +25,7 @@ const App = () => {
         fetchCart()
     }, [])
 
-    console.log(cart)
+    console.log("CURRENT CART", cart)
 
     return (
         <div>
