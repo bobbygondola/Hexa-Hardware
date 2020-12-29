@@ -8,7 +8,7 @@ import useStyles from './styles.js'
 const Products = ({products, onAddToCart}) => {
     const classes = useStyles()
     return (
-    <main className={classes.content}>
+    <main className={classes.content} className={classes.bg}>
         <div className={classes.toolbar} />
         <Grid container justify="center" spacing={4}>
             {products.map((product) => {
