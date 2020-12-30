@@ -1,27 +1,24 @@
+
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(() => ({
   root: {
-    maxWidth: '90%',
-    height: '400px',
-    wordWrap: 'break-word',
+    // maxWidth: 345, original width style
+    maxWidth: '100%',
+    height: "400px",
   },
   media: {
     height: 0,
     paddingTop: '56.25%', // 16:9
-
   },
   cardActions: {
     display: 'flex',
     justifyContent: 'flex-end',
-    
   },
   cardContent: {
     display: 'flex',
+    justifyContent: 'space-between',
+    display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
-    backgroundColor: "#F5F4F1",
-    color: "black",
-    width: '100%'
   },
 }));

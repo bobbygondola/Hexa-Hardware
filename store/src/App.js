@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { commerce } from './lib/commerce'
-import { Products, Navbar, Cart } from './components'
+import { Products, Navbar, Cart, Checkout } from './components'
 
 //router
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
@@ -46,24 +46,23 @@ const App = () => {
     console.log("CURRENT CART", cart)
 
     return (
-        <Router>
-            <div>
-                <Navbar totalItems={cart.total_items}/>
-                <Switch>
-                    <Route exact path="/products">
-                        <Products products={products} onAddToCart={handleAddToCart}/>
-                    </Route>
-                    <Route exact path="/cart">
-                        <Cart 
-                        cart={cart}
-                        handleUpdateCartQuantity={handleUpdateCartQuantity}
-                        handleRemoveFromCart={handleRemoveFromCart}
-                        handleEmptyCart={handleEmptyCart}
-                        />
-                    </Route>
-                </Switch>
-            </div>
-        </Router>
+    <Router>
+      <div style={{ display: 'flex' }}>
+        <Navbar totalItems={cart.total_items} />
+        <Switch>
+          <Route exact path="/products">
+            <Products products={products} handleAddToCart={handleAddToCart} handleUpdateCartQuantity={handleUpdateCartQuantity} />
+          </Route>
+          <Route exact path="/cart">
+            <Cart cart={cart} handleUpdateCartQuantity={handleUpdateCartQuantity} handleRemoveFromCart={handleRemoveFromCart} handleEmptyCart={handleEmptyCart} />
+          </Route>
+          <Route exact path="/checkout">
+            <Checkout />
+          </Route>
+        </Switch>
+      </div>
+    </Router> 
+        
     )
 }
 
