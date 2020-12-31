@@ -17,7 +17,7 @@ const Product = ({ product, handleAddToCart }) => {
           <Typography gutterBottom variant="h5" component="h2">
             {product.name}
           </Typography>
-          <Typography gutterBottom variant="p" component="p">
+          <Typography gutterBottom variant="caption" component="h2">
             ${product.price.formatted}
           </Typography>
         </div>
