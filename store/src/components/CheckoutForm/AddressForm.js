@@ -6,7 +6,7 @@ import FormInput from './CustomFormInput'
 
 import { commerce } from '../../lib/commerce'
 
-const AddressForm = () => {
+const AddressForm = ({ checkoutToken }) => {
     const [shippingCountries, setShippingCountries] = useState([]);
     const [shippingCountry, setShippingCountry] = useState('');
     const [shippingSubdivisons, setShippingSubdivisons] = useState([]);
@@ -15,12 +15,31 @@ const AddressForm = () => {
     const [shippingOption, setShippingOption] = useState('');
     const methods = useForm();
     
+    const countries = Object.entries(shippingCountries).map(([code, name]) => ({id: code, label: name})) //convert from OBJ to 2D array, map over each, turn each array into Labeled key,value pairs
+    const relevantSubdivisions = Object.entries(shippingSubdivisons).map(([code, name]) => ({id: code, label: name}))
+
 
     const fetchShippingCountries = async (checkoutTokenId) => {
         const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId)
 
+        console.log(countries)
         setShippingCountries(countries)
+        setShippingCountry(Object.keys(countries)[0])
       };
+
+      const fetchSubdivisons = async (countryCode) => {
+        const { subdivisions } = await commerce.services.localeListSubdivisions(countryCode)
+        setShippingSubdivisons(subdivisions)
+        setShippingSubdivison(Object.keys(subdivisions)[0])
+      }
+      
+    useEffect(() => {
+        fetchShippingCountries(checkoutToken.id)
+    }, [])
+
+    useEffect(() => {
+        if (shippingCountry) {fetchSubdivisons(shippingCountry)}
+    }, [shippingCountry])
 
 
     return (
@@ -36,25 +55,31 @@ const AddressForm = () => {
                         <FormInput required name="city" label="City"/>
                         <FormInput required name="zip" label="ZIP / Postal Code"/>
 
-                        {/* <Grid item xs={12} sm={6} >
+                        <Grid item xs={12} sm={6} >
                             <InputLabel>Shipping Country</InputLabel>
-                            <Select value={null} fullWidth onChange={null}>
-                                <MenuItem key={null} value={null}>
-                                    Select Me
-                                </MenuItem>
+                            <Select value={shippingCountry} fullWidth onChange={(e) => {setShippingCountry(e.target.value)}}>
+                                {countries.map((country) => (
+                                    <MenuItem key={country.id} value={country.id}>
+                                    {country.label}
+                                    </MenuItem>
+                                ))}
+                                
                             </Select>
                         </Grid>
 
                         <Grid item xs={12} sm={6} >
-                            <InputLabel>Shipping Subdivison</InputLabel>
-                            <Select value={null} fullWidth onChange={null}>
-                                <MenuItem key={null} value={null}>
-                                    Select Me
-                                </MenuItem>
+                            <InputLabel>State/Subdivison</InputLabel>
+                            <Select value={shippingSubdivison} fullWidth onChange={(e) => {setShippingSubdivison(e.target.value)}}>
+                                {relevantSubdivisions.map((subdivison) => (
+                                    <MenuItem key={subdivison.id} value={subdivison.id}>
+                                    {subdivison.label}
+                                    </MenuItem>
+                                ))}
+                                
                             </Select>
                         </Grid>
 
-                        <Grid item xs={12} sm={6} >
+                        {/* <Grid item xs={12} sm={6} >
                             <InputLabel>Shipping Options</InputLabel>
                             <Select value={null} fullWidth onChange={null}>
                                 <MenuItem key={null} value={null}>
