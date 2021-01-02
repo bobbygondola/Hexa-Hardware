@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { commerce } from './lib/commerce'
 import { Products, Navbar, Cart, Checkout } from './components'
-
+//Happy New Year!!! 01/01/2021
 //router
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
